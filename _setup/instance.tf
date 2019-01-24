@@ -2,28 +2,18 @@
 The configuration file for setting up instances
 */
 
-variable "jenkins_key" {
-  type = "string"
-}
-
-variable "jenkins_key_name" {
-  type = "string"
-}
-
-variable "count_var" {}
-
-resource "aws_instance" "pg_instance_1" {
-  ami                    = "ami-08569b978cc4dfa10"
-  count                  = "${var.count_var}"
-  instance_type          = "t2.medium"
-  subnet_id              = "${aws_subnet.pg_subnet.id}"
-  vpc_security_group_ids = ["${aws_default_security_group.pg_d_sg.id}"]
-  key_name               = "${var.jenkins_key_name}"
+resource "aws_instance" "jm_instance" {
+  ami                    = "${var.jm_ami_id}"
+  count                  = "${var.jm_instance_count_var}"
+  instance_type          = "${var.jm_instance_type}"
+  subnet_id              = "${aws_subnet.m_subnet.id}"
+  vpc_security_group_ids = ["${aws_default_security_group.m_d_sg.id}"]
+  key_name               = "${var.public_key_1}"
 
   connection {
     type        = "ssh"
-    user        = "ec2-user"
-    private_key = "${file("~/.ssh/${var.jenkins_key}")}"
+    user        = "${var.ssh_connection_user_1}"
+    private_key = "${file("~/.ssh/${var.private_key_1}")}"
   }
 
   provisioner "file" {
@@ -41,22 +31,22 @@ resource "aws_instance" "pg_instance_1" {
   }
 
   tags {
-    Name = "${var.playground_date}_playground AWS instance 1"
+    Name = "${var.tag_purpose_string} Jenkins Master instance ${count.index + 1}"
   }
 }
 
-resource "aws_instance" "pg_instance_2" {
-  ami                    = "ami-08569b978cc4dfa10"
-  count                  = "${var.count_var}"
-  instance_type          = "t2.small"
-  subnet_id              = "${aws_subnet.pg_subnet.id}"
-  vpc_security_group_ids = ["${aws_default_security_group.pg_d_sg.id}"]
-  key_name               = "${var.jenkins_key_name}"
+resource "aws_instance" "arti_instance" {
+  ami                    = "${var.arti_ami_id}"
+  count                  = "${var.arti_instance_count_var}"
+  instance_type          = "${var.arti_instance_type}"
+  subnet_id              = "${aws_subnet.m_subnet.id}"
+  vpc_security_group_ids = ["${aws_default_security_group.m_d_sg.id}"]
+  key_name               = "${var.public_key_1}"
 
   connection {
     type        = "ssh"
-    user        = "ec2-user"
-    private_key = "${file("~/.ssh/${var.jenkins_key}")}"
+    user        = "${var.ssh_connection_user_1}"
+    private_key = "${file("~/.ssh/${var.private_key_1}")}"
   }
 
   provisioner "remote-exec" {
@@ -66,6 +56,6 @@ resource "aws_instance" "pg_instance_2" {
   }
 
   tags {
-    Name = "${var.playground_date}_playground AWS instance 2"
+    Name = "${var.tag_purpose_string} Artifactory instance ${count.index + 1}"
   }
 }

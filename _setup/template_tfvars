@@ -1,0 +1,44 @@
+/*
+
+A template for a .tfvars file that will fill in most of the variables used in the terraform script.
+
+*/
+
+// Instance constants
+
+public_key_1 =
+private_key_1 =
+
+jm_ami_id =
+jm_instance_type =
+
+arti_ami_id =
+arti_instance_type =
+
+ssh_connection_user_1 =
+
+// Network constants
+
+aws_provider_region =
+m_vpc_cidr_block =
+m_subnet_cidr_block =
+m_subnet_availability_zone =
+m_d_rt_cidr_block_1 =
+
+// Security group ingress and egress constants
+
+ssh_port_number_ingress =
+ssh_cidr_blocks_ingress =
+
+jenkins_port_number_ingress =
+jenkins_cidr_blocks_ingress =
+
+arti_port_number_ingress =
+arti_cidr_blocks_ingress =
+
+sonarqube_port_number_ingress =
+sonarqube_cidr_blocks_ingress =
+
+// General constants
+
+tag_purpose_string =

@@ -3,84 +3,77 @@ The configuration file for setting up the initial network configurations
 */
 
 provider "aws" {
-  region = "ap-southeast-1"
+  region = "${var.aws_provider_region}"
 }
 
-resource "aws_vpc" "pg_vpc" {
-  cidr_block = "192.0.0.0/16"
+resource "aws_vpc" "m_vpc" {
+  cidr_block = "${var.m_vpc_cidr_block}"
 
   tags {
-    Name = "${var.playground_date}_playground virtual private network"
+    Name = "${var.tag_purpose_string} virtual private network"
   }
 }
 
-resource "aws_subnet" "pg_subnet" {
-  vpc_id            = "${aws_vpc.pg_vpc.id}"
-  cidr_block        = "192.0.0.0/24"
-  availability_zone = "ap-southeast-1a"
+resource "aws_subnet" "m_subnet" {
+  vpc_id            = "${aws_vpc.m_vpc.id}"
+  cidr_block        = "${var.m_subnet_cidr_block}"
+  availability_zone = "${var.m_subnet_availability_zone}"
 
   map_public_ip_on_launch = true
 
   tags {
-    Name = "${var.playground_date}_playground subnet"
+    Name = "${var.tag_purpose_string} subnet"
   }
 }
 
-resource "aws_internet_gateway" "pg_igw" {
-  vpc_id = "${aws_vpc.pg_vpc.id}"
+resource "aws_internet_gateway" "m_igw" {
+  vpc_id = "${aws_vpc.m_vpc.id}"
 
   tags {
-    Name = "${var.playground_date}_playground internet gateway"
+    Name = "${var.tag_purpose_string} internet gateway"
   }
 }
 
-resource "aws_default_security_group" "pg_d_sg" {
-  vpc_id = "${aws_vpc.pg_vpc.id}"
+resource "aws_default_security_group" "m_d_sg" {
+  vpc_id = "${aws_vpc.m_vpc.id}"
 
   ingress {
     protocol    = "tcp"
     self        = true
-    from_port   = 22
-    to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = "${var.ssh_port_number_ingress}"
+    to_port     = "${var.ssh_port_number_ingress}"
+    cidr_blocks = "${var.ssh_cidr_blocks_ingress}"
     description = "SSH port"
   }
 
   ingress {
     protocol    = "tcp"
     self        = true
-    from_port   = 8080
-    to_port     = 8080
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = "${var.jenkins_port_number_ingress}"
+    to_port     = "${var.jenkins_port_number_ingress}"
+    cidr_blocks = "${var.jenkins_cidr_blocks_ingress}"
     description = "Jenkins port"
   }
 
   ingress {
     protocol    = "tcp"
     self        = true
-    from_port   = 9000
-    to_port     = 9000
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "SonarQube port"
+    from_port   = "${var.arti_port_number_ingress}"
+    to_port     = "${var.arti_port_number_ingress}"
+    cidr_blocks = "${var.arti_cidr_blocks_ingress}"
+    description = "Artifactory and SonarQube port"
   }
 
-  ingress {
-    protocol    = "tcp"
-    self        = true
-    from_port   = 8081
-    to_port     = 8081
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "JFrog Artifactory port"
-  }
-
-  ingress {
-    protocol    = "tcp"
-    self        = true
-    from_port   = 8082
-    to_port     = 8082
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Nexus port"
-  }
+  /*
+      ingress {
+        protocol    = "tcp"
+        self        = true
+        from_port   = "${var.sonarqube_port_number_ingress}"
+        to_port     = "${var.sonarqube_port_number_ingress}"
+        cidr_blocks = "${var.sonarqube_cidr_blocks_ingress}"
+        description = "SonarQube port"
+      }
+    */
 
   egress {
     from_port   = 0
@@ -88,21 +81,20 @@ resource "aws_default_security_group" "pg_d_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags {
-    Name = "${var.playground_date}_playground default security group"
+    Name = "${var.tag_purpose_string} default security group"
   }
 }
 
-resource "aws_default_route_table" "pg_d_rt" {
-  default_route_table_id = "${aws_vpc.pg_vpc.default_route_table_id}"
+resource "aws_default_route_table" "m_d_rt" {
+  default_route_table_id = "${aws_vpc.m_vpc.default_route_table_id}"
 
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.pg_igw.id}"
+    cidr_block = "${var.m_d_rt_cidr_block_1}"
+    gateway_id = "${aws_internet_gateway.m_igw.id}"
   }
 
   tags {
-    Name = "${var.playground_date}_playground default route table"
+    Name = "${var.tag_purpose_string} default route table"
   }
 }
