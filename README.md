@@ -48,7 +48,7 @@ In a separate tab, navigate to http://\<IP\>:8081 and confirm Artifactory is up.
 
 ![](images/ArtifactoryMainPage.png)
 
-(If you wish to login, default username and password is admin/password
+(If you wish to login, default username and password is admin/password)
 
 ### Check SonarQube is running
 
@@ -56,7 +56,7 @@ In a separate tab, navigate to http://\<IP\>:8081 and confirm SonarQube is up.
 
 ![](images/SonarqubeMainPage.png)
 
-(If you wish to login, default username and password is admin/password
+(If you wish to login, default username and password is admin/password)
 
 ## Setup
 
