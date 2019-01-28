@@ -82,7 +82,7 @@ Updates to the JPetstore pom file have been known to build errors. To pre-empt o
 
     ![](images/ArtifactoryAdminPage.png)
 
-3. Create 2 new maven repositories with the repository Key field as **libs-snapshot-local** and **libs-release-local** respctively. You may leave the rest of the fields as is.
+3. Create 2 new maven repositories with the repository Key field as **libs-snapshot-local** and **libs-release-local** respectively. You may leave the rest of the fields as is.
 
 ![](images/ArtifactoryNewRepo.png)
 
