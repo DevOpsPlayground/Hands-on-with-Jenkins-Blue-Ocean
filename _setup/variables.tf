@@ -5,79 +5,81 @@ Holds the "constants" used throughout the terraform code for ease of changing
 // Instance constants
 
 variable "public_key_1" {
-  type = "string"
+  type        = "string"
+  description = "The public key of the AWS key pair used to connect to the instances"
 }
 
 variable "private_key_1" {
-  type = "string"
+  type        = "string"
+  description = "The private key of the AWS key pair used to connect to the instances"
 }
 
 variable "jm_ami_id" {
   type        = "string"
-  description = "The AMI id used by the Jenkins Master instance"
+  description = "The AMI id used by the Jenkins Master Linux instance"
 }
 
 variable "jm_instance_count_var" {
   type        = "string"
-  description = "The number of Jenkins Master instances to be spun up"
-  default     = "1"
+  description = "The number of Jenkins Master Linux instances to be spun up"
+  default     = 1
 }
 
 variable "jm_instance_type" {
   type        = "string"
-  description = "The size used by the Jenkins Master instance"
+  description = "The size used by the Jenkins Master Linux instance"
   default     = "t2.medium"
 }
 
 variable "arti_ami_id" {
   type        = "string"
-  description = "The AMI id used by the Artifactory instance"
+  description = "The AMI id used by the Artifactory Linux instance"
 }
 
 variable "arti_instance_count_var" {
   type        = "string"
-  description = "The number of Artifactory instances to be spun up"
-  default     = "1"
+  description = "The number of Artifactory Linux instances to be spun up"
+  default     = 1
 }
 
 variable "arti_instance_type" {
   type        = "string"
-  description = "The size used by the Artifactory instance"
+  description = "The size used by the Artifactory Linux instance"
   default     = "t2.small"
 }
 
 variable "ssh_connection_user_1" {
   type        = "string"
-  description = "User 1 used for the SSH connection"
+  description = "The default SSH user 1 used for the connection, determined by the AMI selected"
 }
 
 // Network constants
 
 variable "aws_provider_region" {
   type        = "string"
-  description = "The region of the AWS provider"
+  description = "The region the AWS provider in which the resources will be running. For example, EU (Ireland) or Asia Pacific (Singapore), with values eu-west-1 and ap-southeast-1 respectively"
 }
 
 variable "m_vpc_cidr_block" {
   type        = "string"
-  description = "The cidr block of m_vpc"
+  description = "The cidr block range of IP addresses for the virtual private cloud"
   default     = "192.0.0.0/16"
 }
 
 variable "m_subnet_cidr_block" {
   type        = "string"
-  description = "The cidr block of m_subnet"
+  description = "The cidr block range of IP addresses for the subnet"
   default     = "192.0.0.0/24"
 }
 
 variable "m_subnet_availability_zone" {
   type        = "string"
-  description = "The availability zone of m_subnet"
+  description = "The availability zone within the provider region the resources will be running. The value will often be the value for the provider region followed by a letter, for e.g. eu-west-1a and ap-southeast-1b"
 }
 
 variable "m_d_rt_cidr_block_1" {
   type        = "string"
-  description = "The 1st cidr block of m_default route table"
+  description = "The 1st cidr block range of IP addresses used by the default route table"
   default     = "0.0.0.0/0"
 }
 
