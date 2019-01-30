@@ -334,10 +334,10 @@ Then execute:
 $terraform plan
 ```
 
-Finally, run the following and specify the number of instances you want to create:
+Finally, apply the plan:
 
 ```
-$terraform apply -var count_var=1
+$terraform apply
 ```
 
 
