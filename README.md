@@ -134,7 +134,7 @@ Updates to the JPetstore pom file have been known to build errors. To pre-empt o
 
     ![](images/BlueOceanCreatePipeline1.png)
 
-  * You may need to log in to your github account again
+  * You may need to log in to your GitHub account again
 
 5. Fill in an appropriate description such as 'Playground_token'. You may review the permissions this token permits. Click Generate token when done
 
@@ -228,7 +228,7 @@ Updates to the JPetstore pom file have been known to build errors. To pre-empt o
 
     ![](images/BlueOceanPipelineBuild10.png)
 
-18. To save and upload the Jenkinsfile to the github repository, click Save on the top right, with an appropriate description for the change like 'initial Jenkinsfile creation'.
+18. To save and upload the Jenkinsfile to the GitHub repository, click Save on the top right, with an appropriate description for the change like 'initial Jenkinsfile creation'.
 
 19. Click save and run to upload the file and trigger the Jenkins Build.
 
