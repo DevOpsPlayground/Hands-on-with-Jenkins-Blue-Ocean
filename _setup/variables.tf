@@ -1,5 +1,5 @@
 /*
-Holds the varaibles used throughout the terraform code
+Holds the variables used throughout the terraform code
 */
 
 // Instance constants
