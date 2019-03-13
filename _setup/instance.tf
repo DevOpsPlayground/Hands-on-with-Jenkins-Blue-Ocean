@@ -21,12 +21,23 @@ resource "aws_instance" "jm_instance" {
     destination = "/tmp"
   }
 
+  provisioner "file" {
+    source      = "scripts/sonarqube_linux_installation.sh"
+    destination = "/tmp/sonarqube_linux_installation.sh"
+  }
+
   provisioner "remote-exec" {
     scripts = [
       "scripts/jenkins.sh",
       "scripts/jenkins_master_config.sh",
       "scripts/jenkins_agent_config.sh",
-      "scripts/sonarqube_linux_installation.sh",
+    ]
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod 755 /tmp/sonarqube_linux_installation.sh",
+      "/tmp/sonarqube_linux_installation.sh ${var.sonarqube_port_number_ingress}",
     ]
   }
 

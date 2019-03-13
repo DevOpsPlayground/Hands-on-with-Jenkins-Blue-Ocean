@@ -5,6 +5,9 @@
 
 echo Starting SonarQube installation procedure
 
+# Assign variables
+port_number=$1
+
 # Remove default Java and install version known to work with SonarQube
 sudo yum remove java -y
 sudo yum install java-1.8.0-openjdk-devel -y
@@ -22,8 +25,8 @@ sudo chown root:root /etc/init.d/sonar
 sudo chkconfig --add sonar
 sudo sed -i 's/wrapper.java.command=java/wrapper.java.command=\/usr\/lib\/jvm\/jre\/bin\/java/' /etc/sonarqube/sonarqube-6.7.6/conf/wrapper.conf
 
-# Change sonar port to 8081
-sudo sed -i 's/#sonar.web.port=9000/sonar.web.port=8081/' /etc/sonarqube/sonarqube-6.7.6/conf/sonar.properties
+# Change sonar port to a variable port number
+sudo sed -i "s/#sonar.web.port=9000/sonar.web.port=$port_number/" /etc/sonarqube/sonarqube-6.7.6/conf/sonar.properties
 
 # Create sonar user and change file permissions
 sudo useradd sonar
