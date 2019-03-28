@@ -133,9 +133,32 @@ variable "sonarqube_cidr_blocks_ingress" {
   default     = ["0.0.0.0/0"]
 }
 
+variable "theia_port_number_ingress" {
+  type        = "string"
+  description = "The Theia port number used in the ingress rule"
+  default     = 4000
+}
+
+variable "theia_cidr_blocks_ingress" {
+  type        = "list"
+  description = "The list of Theia cidr blocks used in the ingress rule"
+  default     = ["0.0.0.0/0"]
+}
+
 // General constants
 
 variable "tag_purpose_string" {
   type        = "string"
   description = "What is this resource's purpose"
+}
+
+variable "jenkins_user" {
+  type        = "string"
+  description = "The Linux username for jenkins"
+  default     = "jenkins"
+}
+
+variable "linux_user_1" {
+  type        = "string"
+  description = "Linux username 1"
 }

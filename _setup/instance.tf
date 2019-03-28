@@ -17,8 +17,18 @@ resource "aws_instance" "jm_instance" {
   }
 
   provisioner "file" {
-    source      = "config_files/"
-    destination = "/tmp"
+    source      = "config_files/admin_accnt_config.xml"
+    destination = "/tmp/admin_accnt_config.xml"
+  }
+
+  provisioner "file" {
+    source      = "config_files/jenkins_config.xml"
+    destination = "/tmp/jenkins_config.xml"
+  }
+
+  provisioner "file" {
+    source      = "config_files/sonar"
+    destination = "/tmp/sonar"
   }
 
   provisioner "file" {
@@ -26,8 +36,14 @@ resource "aws_instance" "jm_instance" {
     destination = "/tmp/sonarqube_linux_installation.sh"
   }
 
+  provisioner "file" {
+    source      = "scripts/theia_installation.sh"
+    destination = "/tmp/theia_installation.sh"
+  }
+
   provisioner "remote-exec" {
     scripts = [
+      "scripts/docker_installation.sh",
       "scripts/jenkins.sh",
       "scripts/jenkins_master_config.sh",
       "scripts/jenkins_agent_config.sh",
@@ -36,8 +52,12 @@ resource "aws_instance" "jm_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "chmod 755 /tmp/sonarqube_linux_installation.sh",
+      "chmod -R 755 /tmp/scripts/sonarqube_linux_installation.sh",
       "/tmp/sonarqube_linux_installation.sh ${var.sonarqube_port_number_ingress}",
+      "chmod -R 755 /tmp/docker_username_configuration.sh",
+      "/tmp/docker_username_configuration.sh ${var.jenkins_user} ${var.linux_user_1}",
+      "chmod -R 755 /tmp/theia_installation.sh",
+      "/tmp/theia_installation.sh ${var.theia_port_number_ingress}",
     ]
   }
 
