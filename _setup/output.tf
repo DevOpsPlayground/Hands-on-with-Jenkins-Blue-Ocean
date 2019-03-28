@@ -17,6 +17,11 @@ output "jm_public_ip_sonarqube" {
   value       = "${formatlist("%s:%s",aws_instance.jm_instance.*.public_ip,"${var.sonarqube_port_number_ingress}")}"
 }
 
+output "jm_public_ip_theia" {
+  description = "Public ip and port of Theia on the Jenkins Master instance"
+  value       = "${formatlist("%s:%s",aws_instance.jm_instance.*.public_ip,"${var.theia_port_number_ingress}")}"
+}
+
 output "arti_public_ip" {
   description = "Public ip of the Artifactory instance"
   value       = "${aws_instance.arti_instance.*.public_ip}"

@@ -75,6 +75,14 @@ resource "aws_default_security_group" "m_d_sg" {
       }
     */
 
+  ingress {
+    protocol    = "tcp"
+    self        = true
+    from_port   = "${var.theia_port_number_ingress}"
+    to_port     = "${var.theia_port_number_ingress}"
+    cidr_blocks = "${var.theia_cidr_blocks_ingress}"
+    description = "Theia port"
+  }
   egress {
     from_port   = 0
     to_port     = 0
