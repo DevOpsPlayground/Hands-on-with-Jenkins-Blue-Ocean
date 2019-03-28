@@ -23,3 +23,5 @@ m_subnet_availability_zone =
 // General constants
 
 tag_purpose_string =
+jenkins_user =
+linux_user_1 =

@@ -41,6 +41,11 @@ resource "aws_instance" "jm_instance" {
     destination = "/tmp/theia_installation.sh"
   }
 
+  provisioner "file" {
+    source      = "scripts/docker_username_configuration.sh"
+    destination = "/tmp/docker_username_configuration.sh"
+  }
+
   provisioner "remote-exec" {
     scripts = [
       "scripts/docker_installation.sh",
